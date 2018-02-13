@@ -20,6 +20,7 @@ public class TestBase {
 	String path = System.getProperty("user.dir")+"//src//main//java//config//config.properties";
 	public static String url ;
 	public static String browser;
+	
 			
 	public static WebDriver launch() throws IOException
 	{
@@ -88,6 +89,29 @@ public class TestBase {
 		
 	driver.get(url);
 
+	}
+	
+	public void quitDriver()
+	{
+		driver.quit();
+	}
+	public static String getReportConfigPath(){
+		File file = new File(System.getProperty("user.dir")+"/src/main/java/config/config.properties");
+		FileInputStream fileInput = null;
+		try {
+			fileInput = new FileInputStream(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		Properties prop = new Properties();
+		try {
+			prop.load(fileInput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String reportConfigPath = prop.getProperty("reportConfigPath");
+		if(reportConfigPath!= null) return reportConfigPath;
+		else throw new RuntimeException("Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");		
 	}
 }
 

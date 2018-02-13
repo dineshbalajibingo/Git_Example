@@ -1,13 +1,25 @@
 package stepDefinition;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.xml.DOMConfigurator;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeTest;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.cucumber.listener.Reporter;
+import com.google.common.io.Files;
+
 import static org.testng.Assert.assertEquals;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import methods.Log;
 import methods.TestBase;
 import pages.LoginPage;
 
@@ -15,9 +27,13 @@ public class UserStepDefinitions extends TestBase{
 
 	LoginPage loginPage;
 
+
 	@Before
 	public void before()
 	{
+		DOMConfigurator.configure("log4j.xml");
+		 
+		Log.startTestCase("Login Test");
 		try {
 			launch();
 		} catch (IOException e) {
@@ -28,9 +44,11 @@ public class UserStepDefinitions extends TestBase{
 		loginPage=PageFactory.initElements(driver, LoginPage.class);
 	}
 	
+	
 	@Given("^Open browser and hit url$")
 	public void open_browser_and_hit_url() throws Throwable {
 		navigatePage();
+		Log.info("Page is Opened");
 	}
 	
 	@Given("^I click on main login button$")
@@ -60,7 +78,7 @@ public class UserStepDefinitions extends TestBase{
 	
 	@Then("^I validate error message$")
 	public void i_validate_error_message() throws Throwable {
-		assertEquals(loginPage.errorMsgValidate(), "User ID and password invalid.");
+		assertEquals(loginPage.errorMsgValidate(), "User ID and password invalidsssssssssssss.");
 	}
 	
 }
